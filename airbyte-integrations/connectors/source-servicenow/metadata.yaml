@@ -1,0 +1,25 @@
+data:
+  allowedHosts:
+    hosts:
+      - TODO # Please change to the hostname of the source.
+  registries:
+    oss:
+      enabled: false
+    cloud:
+      enabled: false
+  connectorSubtype: api
+  connectorType: source
+  definitionId: 345d45f0-789c-4757-84dd-37b69f0a0252
+  dockerImageTag: 0.1.0
+  dockerRepository: airbyte/source-servicenow
+  githubIssueLabel: source-servicenow
+  icon: servicenow.svg
+  license: MIT
+  name: Servicenow
+  releaseDate: TODO
+  supportLevel: community
+  releaseStage: alpha
+  documentationUrl: https://docs.airbyte.com/integrations/sources/servicenow
+  tags:
+    - language:python
+metadataSpecVersion: "1.0"

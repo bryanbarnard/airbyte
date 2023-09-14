@@ -1,0 +1,57 @@
+{
+  "streams": [
+    {
+      "stream": {
+        "name": "incidents",
+        "json_schema": {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "type": "object",
+          "properties": {
+            "incidents": {
+              "type": "object",
+              "properties": {
+                "state": {
+                  "type": "string"
+                },
+                "active": {
+                  "type": "boolean"
+                },
+                "number": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "closed_at": {
+                  "type": "time"
+                },
+                "close_notes": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "contact_type": {
+                  "type": "string"
+                },
+                "sys_updated_on": {
+                  "type": "string"
+                },
+                "sys_id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "supported_sync_modes": [
+          "full_refresh",
+          "incremental"
+        ]
+      },
+      "source_defined_cursor": true,
+      "sync_mode": "incremental",
+      "destination_sync_mode": "append"
+    }
+  ]
+}
