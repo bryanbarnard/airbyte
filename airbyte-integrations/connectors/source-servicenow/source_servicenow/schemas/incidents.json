@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/schema#",
+  "properties": {
+    "active": {
+      "type": "string"
+    },
+    "category": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "close_notes": {
+      "type": "string"
+    },
+    "closed_at": {
+     "type": "string"
+    },
+    "contact_type": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "number": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    },
+    "sys_id": {
+      "type": "string"
+    },
+    "sys_updated_on": {
+     "type": "string"
+    }
+  },
+  "type": "object"
+}
