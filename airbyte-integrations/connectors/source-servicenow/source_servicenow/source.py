@@ -41,7 +41,8 @@ class ServicenowStream(HttpStream, ABC):
     See the reference docs for the full list of configurable options.
     """
 
-    url_base = "https://dev97596.service-now.com/api/now/table/"
+    # url_base = "https://" + config["instance_id"] + ".service-now.com/api/now/table/"
+    url_base = None
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -53,12 +54,15 @@ class Incidents(ServicenowStream, IncrementalMixin):
     state_checkpoint_interval = 1
 
     def __init__(self, config: Mapping[str, Any], start_timestamp: datetime, **kwargs):
-        super().__init__(config, **kwargs)
+        super().__init__(**kwargs)
         self.start_timestamp = start_timestamp
         self._cursor_value = None
+        self._instance_id = config["instance_id"]
 
-        # testing
-        # self._cursor_value = self.start_timestamp
+    @property
+    def url_base(self) -> str:
+        # overriding abstract method
+        return "https://" + self._instance_id + ".service-now.com/api/now/table/"
 
     @property
     def state(self) -> Mapping[str, Any]:
@@ -156,9 +160,10 @@ class SourceServicenow(AbstractSource):
         """
         username = config["username"]
         password = config["password"]
+        instance_id = config["instance_id"]
 
-        #TODO this needs to be parameterized
-        url = "https://dev97596.service-now.com/api/now/table/incident?sys_parm_limit=1"
+        # TODO this needs to be parameterized and should be moved to an init
+        url = "https://" + instance_id + ".service-now.com/api/now/table/incident?sys_parm_limit=1"
 
         try:
             response = requests.get(url, auth=(username, password), headers={})

@@ -7,12 +7,14 @@ connectionSpecification:
     - username
     - password
     - start_timestamp
-    - instance
+    - instance_id
   properties:
-    instance:
+    instance_id:
       type: string
       description: Name of ServiceNow instance to connect to.
       airbyte_secret: false
+      examples:
+        - "dev97596"
       order: 0
     username:
       type: string
