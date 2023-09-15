@@ -7,15 +7,23 @@ connectionSpecification:
     - username
     - password
     - start_timestamp
+    - instance
   properties:
+    instance:
+      type: string
+      description: Name of ServiceNow instance to connect to.
+      airbyte_secret: false
+      order: 0
     username:
       type: string
-      description: Username of a ServiceNow user with the appropriate role based access controls to call the Table API .
+      description: Username of a ServiceNow user with the appropriate role based access controls to call the Table API.
       airbyte_secret: true
+      order: 1
     password:
       type: string
-      description: Password of the ServiceNow user that will be used to connect to ServiceNow .
+      description: Password of the ServiceNow user that will be used to connect to ServiceNow.
       airbyte_secret: true
+      order: 2
     start_timestamp:
       type: string
       description: Start getting data from this timestamp.
@@ -23,3 +31,4 @@ connectionSpecification:
       examples:
         - "%Y-%m-%d %H:%M:%S"
         - "2023-07-18 15:00:05"
+      order: 3

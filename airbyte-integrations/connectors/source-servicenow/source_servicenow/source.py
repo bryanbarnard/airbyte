@@ -43,7 +43,7 @@ class ServicenowStream(HttpStream, ABC):
 
     url_base = "https://dev97596.service-now.com/api/now/table/"
 
-    def __init__(self, config: Mapping[str, Any], **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
 
@@ -156,6 +156,8 @@ class SourceServicenow(AbstractSource):
         """
         username = config["username"]
         password = config["password"]
+
+        #TODO this needs to be parameterized
         url = "https://dev97596.service-now.com/api/now/table/incident?sys_parm_limit=1"
 
         try:

@@ -1,3 +1,5 @@
 {
-  "todo-wrong-field": "this should be an incomplete config file, used in standard tests"
+  "username": "admin",
+  "start_timestamp": "2023-07-15 14:00:00"
 }
+
