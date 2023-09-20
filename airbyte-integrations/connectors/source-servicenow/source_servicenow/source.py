@@ -7,7 +7,9 @@ from abc import ABC
 from typing import Any, Iterable, List, Mapping, MutableMapping, Optional, Tuple
 
 import requests
+from requests import codes, exceptions
 from airbyte_cdk.sources import AbstractSource
+from airbyte_cdk.logger import AirbyteLogger
 from airbyte_cdk.sources.streams import Stream
 from airbyte_cdk.sources.streams.http import HttpStream
 from airbyte_cdk.sources.streams.http.requests_native_auth import BasicHttpAuthenticator
@@ -152,7 +154,7 @@ class Incidents(ServicenowStream, IncrementalMixin):
 
 
 class SourceServicenow(AbstractSource):
-    def check_connection(self, logger, config) -> Tuple[bool, any]:
+    def check_connection(self, logger: AirbyteLogger, config: Mapping[str, Any]) -> Tuple[bool, any]:
         """
         :param config:  the user-input config object conforming to the connector's spec.yaml
         :param logger:  logger object
@@ -161,17 +163,22 @@ class SourceServicenow(AbstractSource):
         username = config["username"]
         password = config["password"]
         instance_id = config["instance_id"]
-
-        # TODO this needs to be parameterized and should be moved to an init
         url = "https://" + instance_id + ".service-now.com/api/now/table/incident?sys_parm_limit=1"
 
         try:
-            response = requests.get(url, auth=(username, password), headers={})
-            if response.status_code == 200:
-                return True, None
-        # TODO: improve this connection check
-        except ConnectionError as error:
+            requests.get(url, auth=(username, password), headers={})
+        except exceptions.HTTPError as error:
+            error_msg = f"An error occurred: {error.response.text}"
+            try:
+                error_data = error.response.json()[0]
+                error_code = error_data.get("errorCode")
+                logger.warn(f"API Call Failed. Error message: '{error_data.get('message')}' Error Code: {error_code}")
+            except (KeyError, requests.exceptions.JSONDecodeError):
+                pass
+            else:
+                return False, error_msg
             return False, error
+        return True, None
 
     def streams(self, config: Mapping[str, Any]) -> List[Stream]:
         username = config["username"]
