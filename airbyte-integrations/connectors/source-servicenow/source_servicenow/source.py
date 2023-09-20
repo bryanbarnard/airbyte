@@ -142,7 +142,6 @@ class Incidents(ServicenowStream, IncrementalMixin):
         return {
             "sysparm_display_value": "true",
             "sysparm_exclude_reference_link": "true",
-
             "sysparm_fields": "number,sys_updated_on,sys_id,category,state,closed_at,active,close_notes,description,contact_type",
 
             # for simpler testing use less fields
